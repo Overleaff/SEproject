@@ -1,0 +1,13 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx-swt.jar",
+        "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.base.jar",
+        "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.controls.jar",
+        "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.fxml.jar",
+        "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.graphics.jar",
+        "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.media.jar",
+        "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.swing.jar",
+        "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.web.jar"
+    ]
+}
