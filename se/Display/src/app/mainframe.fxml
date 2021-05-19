@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <Text fx:id="chooseK" layoutX="79.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose K" wrappingWidth="151.5982607603073">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="image1" fitHeight="50.0" fitWidth="56.0" layoutX="14.0" layoutY="146.0">
+         <image>
+            <Image url="@../../../../../Downloads/download.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="textK" layoutX="259.0" layoutY="158.0" />
+      <Button fx:id="visual" layoutX="78.0" layoutY="690.0" mnemonicParsing="false" onAction="#visualClick" prefHeight="32.0" prefWidth="121.0" text="Visual" />
+      <Pane fx:id="paneGraph" layoutX="436.0" layoutY="24.0" prefHeight="478.0" prefWidth="751.0" />
+      <Text fx:id="chooseAlgo" layoutX="87.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choosing Algorithm" wrappingWidth="135.6302032470703">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Text>
+      <ImageView fx:id="image2" fitHeight="74.0" fitWidth="63.0" layoutX="11.0" layoutY="238.0">
+         <image>
+            <Image url="@../../../../../Downloads/pngtree-learning-deep-algorithm-data-blue-dotted-line-line-icon-png-image_5254085.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="image3" fitHeight="74.0" fitWidth="78.0" layoutY="361.0">
+         <image>
+            <Image url="@../../../../../Downloads/ebe42566fe2372b2259f84c3198171c8.jpg" />
+         </image>
+      </ImageView>
+      <Text fx:id="data" layoutX="87.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data" wrappingWidth="96.00001546740532" />
+      <ChoiceBox fx:id="textAlgo" layoutX="239.0" layoutY="261.0" prefWidth="150.0" />
+      <TextField fx:id="output" layoutX="454.0" layoutY="560.0" prefHeight="175.0" prefWidth="760.0" />
+   </children>
+</Pane>

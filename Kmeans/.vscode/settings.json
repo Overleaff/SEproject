@@ -8,6 +8,14 @@
         "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.graphics.jar",
         "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.media.jar",
         "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.swing.jar",
-        "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.web.jar"
+        "/Users/darkwhale/Desktop/javafx-sdk-16/lib/javafx.web.jar",
+        "c:\\Users\\Admin\\Desktop\\javafx-sdk-11.0.2\\lib\\javafx.base.jar",
+        "c:\\Users\\Admin\\Desktop\\javafx-sdk-11.0.2\\lib\\javafx.controls.jar",
+        "c:\\Users\\Admin\\Desktop\\javafx-sdk-11.0.2\\lib\\javafx.fxml.jar",
+        "c:\\Users\\Admin\\Desktop\\javafx-sdk-11.0.2\\lib\\javafx.graphics.jar",
+        "c:\\Users\\Admin\\Desktop\\javafx-sdk-11.0.2\\lib\\javafx.media.jar",
+        "c:\\Users\\Admin\\Desktop\\javafx-sdk-11.0.2\\lib\\javafx.swing.jar",
+        "c:\\Users\\Admin\\Desktop\\javafx-sdk-11.0.2\\lib\\javafx.web.jar",
+        "c:\\Users\\Admin\\Desktop\\javafx-sdk-11.0.2\\lib\\javafx-swt.jar"
     ]
 }
