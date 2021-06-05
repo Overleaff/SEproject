@@ -1,4 +1,4 @@
-package home;
+package se.project;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,7 @@ public class App extends Application {
     }
     
     public void start(Stage stage) throws Exception {
-        Parent root = (Parent) FXMLLoader.load(getClass().getResource("controller/home.fxml"));
+        Parent root = (Parent) FXMLLoader.load(getClass().getResource("gui/home.fxml"));
 
         Scene scene = new Scene(root);
         
@@ -22,7 +22,7 @@ public class App extends Application {
         stage.setMaxWidth(1000);
       
         
-        Image icon = new Image("home/image/image.png");
+        Image icon = new Image("se/project/image/image.png");
         stage.getIcons().add(icon);
         
         stage.setTitle("DataVisualization");

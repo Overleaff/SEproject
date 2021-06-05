@@ -8,11 +8,11 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controller.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.project.gui.Controller">
    <children>
       <ImageView fitHeight="215.0" fitWidth="200.0" layoutY="185.0">
          <image>
-            <Image url="home/image/cluster.png" />
+            <Image url="se/project/image/cluster.png" />
          </image>
       </ImageView>
       <Button layoutX="332.0" layoutY="187.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="154.0" style="-fx-background-color: #64C3EB; -fx-text-fill: white;" text="K Means" />
