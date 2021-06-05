@@ -1,4 +1,4 @@
-package home.controller;
+package se.project.gui;
 
 import java.io.IOException;
 import java.net.URL;
@@ -89,7 +89,7 @@ public class Controller {
 			Parent root = (Parent) FXMLLoader.load(getClass().getResource("cluster.fxml"));
 			Stage stage =  (Stage) gui.getScene().getWindow();
 			stage.setScene(new Scene(root));
-	        Image icon = new Image("home/image/image.png");
+	        Image icon = new Image("se/project/image/image.png");
 	        stage.getIcons().add(icon);
 	        stage.setTitle("DataVisualization");
 	        stage.setMaxHeight(900);
@@ -107,7 +107,7 @@ public class Controller {
 			Parent root = (Parent) FXMLLoader.load(getClass().getResource("home.fxml"));
 			Stage stage = (Stage) home.getScene().getWindow();
 			stage.setScene(new Scene(root));
-			 Image icon = new Image("home/image/image.png");
+			 Image icon = new Image("se/project/image/image.png");
 		     stage.getIcons().add(icon);
 		     stage.setTitle("DataVisualization");
 	        stage.setMaxHeight(900);
