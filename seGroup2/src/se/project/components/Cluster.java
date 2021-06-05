@@ -3,7 +3,7 @@ package se.project.components;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class cluster {
+public abstract class Cluster {
     private ArrayList<Point> listPoint = new ArrayList<Point>();
     private final int maxNumPoint = 10;
 
