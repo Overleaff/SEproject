@@ -1,4 +1,5 @@
-package algorithmClass;
+package se.project.components;
+
 import java.lang.Math;
 
 public class Point {

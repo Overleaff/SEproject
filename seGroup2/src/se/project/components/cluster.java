@@ -1,4 +1,4 @@
-package algorithmClass;
+package se.project.components;
 import  java.util.*;
 
 public abstract class cluster{
