@@ -1,10 +1,5 @@
 package se.project.clustering.meanshift;
 
-import se.project.clustering.Algorithm;
-import se.project.components.Cluster;
-import se.project.components.Point;
-
-import java.util.ArrayList;
 
 public class MeanShiftClustering extends Cluster implements Algorithm {
     private Point point;
@@ -25,12 +20,30 @@ public class MeanShiftClustering extends Cluster implements Algorithm {
         return Math.pow(Math.E, -0.5 * (squareDistance / squareBandwidth));
     }
 
-    public ArrayList<Point> meanShiftClustering(ArrayList<Point> points, int bandwidth) {
-        return null;
-    }
-
-    public Point shift() {
-        return null;
+    public ArrayList<Point> meanShiftClustering(Point point, ArrayList<Point> pointList, int bandwidth) {
+        double shiftingDistance = 0;
+        do {
+            double shiftX = 0;
+            double shiftY = 0;
+            double scaleFactor = 0;
+            for (Point p : pointList) {
+                double dist = distance(point, p);
+                if (dist <= bandwidth) {
+                    double weight = kernel(dist, bandwidth);
+                    if (weight > 0) {
+                        shiftX += p.getX() * weight;
+                        shiftY += p.getY() * weight;
+                        scaleFactor += weight;
+                    }
+                }
+            }
+            shiftX = shiftX / scaleFactor;
+            shiftY = shiftY / scaleFactor;
+            shiftingDistance = Math.sqrt(Math.pow(shiftX, 2) + Math.pow(shiftY, 2));
+            point.setX(shiftX);
+            point.setY(shiftY);
+        } while (shiftingDistance > 0);
+        return pointList;
     }
 
     @Override
