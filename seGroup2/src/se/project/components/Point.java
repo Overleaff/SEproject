@@ -30,9 +30,6 @@ public class Point {
         return clusterNo;
     }
 
-    public int setClusterNo(int x){
-        this.clusterNo = x;
-    }
 
     public double calculateDistance(Point point) {
         double Ox = this.x - point.getX();
