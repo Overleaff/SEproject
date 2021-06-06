@@ -14,6 +14,9 @@ public class Point {
         this.x = x;
         this.y = y;
     }
+    public void updateCluster(int k){
+        this.clusterNo = k;
+    }
 
     public double getX() {
         return x;
@@ -27,8 +30,10 @@ public class Point {
         return clusterNo;
     }
 
-    public double calculateDistance(double x, double y) {
-        return Math.sqrt(Math.abs(x * x - y * y));
+    public double calculateDistance(Point point) {
+        double Ox = this.x - point.getX();
+        double Oy = this.y - point.getY();
+        return Math.sqrt(Math.abs( Ox * Ox + Oy * Oy ));
     }
 
 }
