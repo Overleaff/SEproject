@@ -1,7 +1,12 @@
 package se.project.clustering.meanshift;
 
 
-public class MeanShiftClustering extends Cluster implements Algorithm {
+import se.project.components.Cluster;
+import se.project.components.Point;
+
+import java.util.ArrayList;
+
+public class MeanShiftClustering extends Cluster {
     private Point point;
 
     public MeanShiftClustering(Point point) {
@@ -52,7 +57,8 @@ public class MeanShiftClustering extends Cluster implements Algorithm {
     }
 
     @Override
-    public ArrayList<Point> finalResult() {
+    public ArrayList<Point> result() {
         return null;
     }
+
 }

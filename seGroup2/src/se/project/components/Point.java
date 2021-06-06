@@ -3,14 +3,11 @@ import java.lang.Math;
 
 public class Point {
 
-	   private double x;
+	    private double x;
 
 	    private double y;
 
-
 	    public int clusterNo;
-
-
 
 	    public Point(double x, double y) {
 	        this.x = x;
@@ -28,15 +25,19 @@ public class Point {
 	        return y;
 	    }
 
-
 	    public int getClusterNo() {
 	        return clusterNo;
 	    }
 
+	public void setX(double x) {
+		this.x = x;
+	}
 
+	public void setY(double y) {
+		this.y = y;
+	}
 
-	    
-	    public double calculateDistance(Point point) {
+	public double calculateDistance(Point point) {
 	        double Ox = this.x - point.getX();
 	        double Oy = this.y - point.getY();
 	        return Math.sqrt(Math.abs( Ox * Ox + Oy * Oy ));

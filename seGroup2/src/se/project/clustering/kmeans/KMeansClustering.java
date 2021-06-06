@@ -2,9 +2,8 @@ package se.project.clustering.kmeans;
 import se.project.components.Cluster;
 import se.project.components.Point;
 import java.util.*;
-import se.project.clustering.algorithm;
 
-public class KMeansClustering implements algorithm{
+public class KMeansClustering {
     ArrayList<Point> Kmeans = new ArrayList<Point>();
     int clusters;
     ArrayList<Point> centroid = new ArrayList<Point>();
@@ -84,7 +83,17 @@ public class KMeansClustering implements algorithm{
     }
 
     public static void main (String[] args){
-        Cluster abc = new Cluster();
+        Cluster abc = new Cluster() {
+            @Override
+            public ArrayList<Point> step() {
+                return null;
+            }
+
+            @Override
+            public ArrayList<Point> result() {
+                return null;
+            }
+        };
         KMeansClustering testing = new KMeansClustering(abc.initPoint(), 3);
         testing.finalResult();
         testing.showPoint();

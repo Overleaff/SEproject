@@ -18,7 +18,7 @@
          </image>
       </ImageView>
       <Button layoutX="370.0" layoutY="432.0" mnemonicParsing="false" text="Next" />
-      <Button layoutX="433.0" layoutY="432.0" mnemonicParsing="false" text="Visual" />
+      <Button layoutX="433.0" layoutY="432.0" mnemonicParsing="false" onMouseClicked="#visual" text="Visual" />
       <Label layoutX="23.0" layoutY="147.0" style="-fx-background-color: ef8891; -fx-text-fill: white;" text="Choosing Algorithm">
          <font>
             <Font size="15.0" />

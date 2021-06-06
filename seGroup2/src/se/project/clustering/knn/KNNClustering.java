@@ -20,8 +20,7 @@ public class KNNClustering extends Cluster{
     	KNNClustering knn = new KNNClustering();
         ArrayList<Point> inputObservations = knn.initPoint();  // train
         
-        knn.showAllPoint();
-         
+        knn.showAllPoint(); 
         Point test1 = new Point(10.0,8.0);
      
 
@@ -37,7 +36,7 @@ public class KNNClustering extends Cluster{
            // Resets the label and adds the Observation back to the list. 
          System.out.println(test1.getClusterNo());
     
-     
+         
         }
     
     
@@ -50,7 +49,7 @@ public class KNNClustering extends Cluster{
      *  - distanceMeasure: the method by which neighbour distances will be calculated
      *  - weighted: true if neighbour votes are to be weighted based on closeness
      *  */
-    public Point classify(Point test, ArrayList<Point> train, int K){
+    public static Point classify(Point test, ArrayList<Point> train, int K){
         // Calculates the neighbour distances between the test example and each training example. 
         Neighbour[] neighbours = new Neighbour[train.size()];
         for (int i = 0; i < neighbours.length; i++){
@@ -94,15 +93,24 @@ public class KNNClustering extends Cluster{
     
  
 
-	@Override
-	public ArrayList<Point> finalResult() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public  ArrayList<Point> finalResult(ArrayList<Point> test, ArrayList<Point> train, int K) {
+		
+	   for(Point point:test) {
+		   point = KNNClustering.classify(point,train,K);
+	   }
+	    return test;
 	}
 
 
 	@Override
 	public ArrayList<Point> step() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public ArrayList<Point> result() {
 		// TODO Auto-generated method stub
 		return null;
 	}
