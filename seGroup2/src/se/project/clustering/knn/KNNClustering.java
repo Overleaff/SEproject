@@ -1,4 +1,109 @@
 package se.project.clustering.knn;
 
-public class KNNClustering {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
+
+import se.project.components.Cluster;
+import se.project.components.Point;
+public class KNNClustering extends Cluster{
+	// Performs leave-one-out cross validation across the entire dataset for each value of K from 1-10 for both weighted and unweighted classifiers. 
+    // Prints the percentage accuracy achieved with each configuration. 
+    // NB: takes several minutes to run.
+	public KNNClustering() {
+		
+	}
+    public static void main(String[] args) {
+    	KNNClustering knn = new KNNClustering();
+        ArrayList<Point> inputObservations = knn.initPoint();  // train
+        
+        knn.showAllPoint();
+         
+        Point test1 = new Point(10.0,8.0);
+     
+
+        // For each k.
+      
+            
+         
+
+                // test point - train - K
+         test1 = knn.classify(test1, inputObservations, 2);
+           
+             
+           // Resets the label and adds the Observation back to the list. 
+         System.out.println(test1.getClusterNo());
+    
+     
+        }
+    
+    
+    /* 
+     * Takes a Observation of unknown class and gives it a class label based on the votes of its k-nearest neighbours.
+     * Parameters:
+     *  - test: a Observation object of unknown class
+     *  - train: an ArrayList of Observations of known class
+     *  - K: the number of neighbours which will vote on the class label
+     *  - distanceMeasure: the method by which neighbour distances will be calculated
+     *  - weighted: true if neighbour votes are to be weighted based on closeness
+     *  */
+    public Point classify(Point test, ArrayList<Point> train, int K){
+        // Calculates the neighbour distances between the test example and each training example. 
+        Neighbour[] neighbours = new Neighbour[train.size()];
+        for (int i = 0; i < neighbours.length; i++){
+          
+                neighbours[i] = new Neighbour(Distance.getEuclid(train.get(i),test),train.get(i).getClusterNo());
+                
+        }
+        
+        // Sorts the array of neighbours by distance.
+        Arrays.sort(neighbours);
+        
+        // Calculates the votes of the K nearest neighbours, unweighted or weighted. 
+        int decision = 0 ;
+    
+            LinkedHashMap<Integer, Integer> votes = new LinkedHashMap<Integer, Integer>();
+            for (int i = 0; i < K; i++){ 
+                // Gets the label of the ith nearest neighbour. 
+                int label = neighbours[i].clusterNo;
+                
+                // Increments the vote for that neighbour's class if already in the list. 
+                if (votes.containsKey(label))
+                    votes.put(label, votes.get(label) + 1);
+                // Adds a vote for that neighbour's class if it is not in the list. 
+                else
+                    votes.put(label, 1);
+            }
+            
+            // Sets the decision as the label with the greatest number of votes.
+            double maxVote = 0;
+            for (Entry<Integer, Integer> vote : votes.entrySet()){
+                if (vote.getValue() > maxVote){
+                    decision = vote.getKey();
+                    maxVote = vote.getValue();
+                }
+            }
+        // Sets the test example's label to that label.
+        test.updateCluster(decision);
+        return test;
+    }
+    
+    
+ 
+
+	@Override
+	public ArrayList<Point> finalResult() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Point> step() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
