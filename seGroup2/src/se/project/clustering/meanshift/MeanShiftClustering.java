@@ -1,25 +1,16 @@
 package se.project.clustering.meanshift;
 
+import se.project.clustering.Algorithm;
 import se.project.components.Cluster;
 import se.project.components.Point;
 
 import java.util.ArrayList;
 
-public class MeanShiftClustering extends Cluster {
+public class MeanShiftClustering extends Cluster implements Algorithm {
     private Point point;
 
     public MeanShiftClustering(Point point) {
         this.point = point;
-    }
-
-    @Override
-    public ArrayList<Point> finalResult() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Point> step() {
-        return null;
     }
 
     private double distance(Point source, Point des) {
@@ -34,11 +25,21 @@ public class MeanShiftClustering extends Cluster {
         return Math.pow(Math.E, -0.5 * (squareDistance / squareBandwidth));
     }
 
-    public ArrayList<Point> meanShiftClustering(Point point, int bandwidth) {
+    public ArrayList<Point> meanShiftClustering(ArrayList<Point> points, int bandwidth) {
         return null;
     }
 
     public Point shift() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Point> step() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Point> finalResult() {
         return null;
     }
 }
