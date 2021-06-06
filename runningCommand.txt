@@ -1,4 +1,8 @@
 -- algorithm 
-cd /Users/darkwhale/Documents/GitHub/SEproject/algorithm
-javac -d . Point.java
-javac -d . -cp /Users/darkwhale/Documents/GitHub/SEproject/algorithm cluster.java
+cd /Users/darkwhale/Documents/GitHub/SEproject/seGroup2/src/se/project/components
+javac -d /Users/darkwhale/Documents/GitHub/SEproject/seGroup2/bin *
+
+cd /Users/darkwhale/Documents/GitHub/SEproject/seGroup2/src/se/project/clustering/kmeans
+
+
+javac -d /Users/darkwhale/Documents/GitHub/SEproject/seGroup2/bin -cp /Users/darkwhale/Documents/GitHub/SEproject/seGroup2/bin KMeansClustering.java && java -cp /Users/darkwhale/Documents/GitHub/SEproject/seGroup2/bin KMeansClustering.java

@@ -1,4 +1,4 @@
 package se.project.clustering.knn;
 
-public class KNNClustering {
+public class KNNClustering implements algorithm{
 }
