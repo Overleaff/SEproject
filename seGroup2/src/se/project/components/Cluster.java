@@ -3,10 +3,12 @@ package se.project.components;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Cluster {
-    private ArrayList<Point> listPoint = new ArrayList<Point>();
+public abstract class Cluster {
+    private ArrayList<Point> listPoint = new ArrayList<Point>();  // store input point
     private final int maxNumPoint = 10;
-
+  // output result point
+    
+    
     public ArrayList<Point> getPoint() {
         return listPoint;
     }
@@ -34,4 +36,12 @@ public class Cluster {
         }
     }
 
+  
+
+   
+    public abstract ArrayList<Point> step();
+    public abstract ArrayList<Point> result();
+	
+
+	
 }
