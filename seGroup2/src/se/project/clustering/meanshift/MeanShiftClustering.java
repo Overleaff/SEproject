@@ -14,8 +14,8 @@ public class MeanShiftClustering extends Cluster {
     }
 
     private double distance(Point source, Point des) {
-        double squareX = Math.pow(des.getX() - source.getY(), 2); //x^2
-        double squareY = Math.pow(des.getY() - source.getX(), 2); //y^2
+        double squareX = Math.pow(des.getX() - source.getX(), 2); //x^2
+        double squareY = Math.pow(des.getY() - source.getY(), 2); //y^2
         return Math.sqrt(squareX + squareY);
     }
 
@@ -44,10 +44,10 @@ public class MeanShiftClustering extends Cluster {
             }
             shiftX = shiftX / scaleFactor;
             shiftY = shiftY / scaleFactor;
-            shiftingDistance = Math.sqrt(Math.pow(shiftX, 2) + Math.pow(shiftY, 2));
+            shiftingDistance = Math.sqrt(Math.pow(shiftX - point.getX(), 2) + Math.pow(shiftY - point.getY(), 2));
             point.setX(shiftX);
             point.setY(shiftY);
-        } while (shiftingDistance > 0);
+        } while (shiftingDistance > 0.00005);
         return pointList;
     }
 
