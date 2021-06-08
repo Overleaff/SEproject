@@ -2,7 +2,9 @@ package se.project.clustering.knn;
 
 public class Neighbour implements Comparable<Neighbour> {
     public double distance;
-    public int clusterNo;
+    
+
+	public int clusterNo;
 
     public Neighbour(double distance,int clusterNo){
         this.distance = distance;
@@ -19,4 +21,12 @@ public class Neighbour implements Comparable<Neighbour> {
         String out = "Distance: " + distance + ", class label: " + clusterNo;
         return out;
     }
+    
+    public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
 }

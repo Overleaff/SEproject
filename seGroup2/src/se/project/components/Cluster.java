@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Cluster {
-    private ArrayList<Point> listPoint = new ArrayList<Point>();  // store input point
-    private final int maxNumPoint = 10;
+    protected ArrayList<Point> listPoint = new ArrayList<Point>();  // store input point
+    protected final int maxNumPoint = 10;
   // output result point
     
     
@@ -20,11 +20,7 @@ public abstract class Cluster {
             double x = rand.nextDouble() * upperbound;
             double y = rand.nextDouble() * upperbound;
             Point tmp = new Point(x, y);
-            if(i<5) {
-            	tmp.updateCluster(1);
-            }else {
-            	tmp.updateCluster(2);
-            }
+            
             this.listPoint.add(tmp);
         }
         return listPoint;
@@ -38,10 +34,9 @@ public abstract class Cluster {
 
   
 
-   
+    
     public abstract ArrayList<Point> step();
     public abstract ArrayList<Point> result();
-	
-
-	
+    
+ 
 }
