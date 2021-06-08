@@ -16,29 +16,24 @@ public class KNNClustering extends Cluster{
 	public KNNClustering() {
 		
 	}
-    public static void main(String[] args) {
-    	KNNClustering knn = new KNNClustering();
-        ArrayList<Point> inputObservations = knn.initPoint();  // train
-        
-        knn.showAllPoint(); 
-        Point test1 = new Point(10.0,8.0);
-     
-
-        // For each k.
-      
-            
-         
-
-                // test point - train - K
-         test1 = knn.classify(test1, inputObservations, 2);
-           
-             
-           // Resets the label and adds the Observation back to the list. 
-         System.out.println(test1.getClusterNo());
-    
-         
-        }
-    
+	 //init when user not enter anything
+	 public  ArrayList<Point> initPoint() {
+	        Random rand = new Random(); //instance of random class
+	        for (int i = 0; i < maxNumPoint; i++) {
+	            double upperbound = 10; //generate random values from 0-24
+	            double x = rand.nextDouble() * upperbound;
+	            double y = rand.nextDouble() * upperbound;
+	            Point tmp = new Point(x, y);
+	            if(i<5) {
+	            	tmp.updateCluster(1);
+	            }else {
+	            	tmp.updateCluster(2);
+	            }
+	            this.listPoint.add(tmp);
+	        }
+	        return listPoint;
+	  }
+   
     
     /* 
      * Takes a Observation of unknown class and gives it a class label based on the votes of its k-nearest neighbours.
@@ -58,7 +53,7 @@ public class KNNClustering extends Cluster{
                 
         }
         
-        // Sorts the array of neighbours by distance.
+                                               // Sorts the array of neighbours by distance.
         Arrays.sort(neighbours);
         
         // Calculates the votes of the K nearest neighbours, unweighted or weighted. 
@@ -94,7 +89,7 @@ public class KNNClustering extends Cluster{
  
 
 	
-	public  ArrayList<Point> finalResult(ArrayList<Point> test, ArrayList<Point> train, int K) {
+	public  ArrayList<Point> result(ArrayList<Point> test, ArrayList<Point> train, int K) {
 		
 	   for(Point point:test) {
 		   point = KNNClustering.classify(point,train,K);
@@ -102,7 +97,32 @@ public class KNNClustering extends Cluster{
 	    return test;
 	}
 
-
+    
+	public  ArrayList<Point> step(Point test, ArrayList<Point> train, int K){
+	  ArrayList<Point> neigh = new ArrayList<>();
+	  Neighbour[] neighbours = new Neighbour[train.size()];
+      for (int i = 0; i < neighbours.length; i++){
+        
+              neighbours[i] = new Neighbour(Distance.getEuclid(train.get(i),test),train.get(i).getClusterNo());
+              
+      }
+                                    // Sorts the array of neighbours by distance.
+      Arrays.sort(neighbours);
+  
+    	  for(int j =0;j<K;j++) {
+    		  double distance = neighbours[j].getDistance();
+    		  for (int i = 0; i < neighbours.length; i++){
+    		    	if( distance  == Distance.getEuclid(train.get(i),test)) {
+    		    		neigh.add(train.get(i));
+    		    	}
+    	  }
+      }
+      test = KNNClustering.classify(test,train,K);
+	  return neigh;
+	}
+	
+	
+	
 	@Override
 	public ArrayList<Point> step() {
 		// TODO Auto-generated method stub
