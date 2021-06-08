@@ -95,7 +95,7 @@ public class Controller implements Initializable {
 				&& Integer.parseInt(kField.getText()) > 0) {
 			knn = new KNNClustering();
 			// replace by user
-			if (xField.getText() == "") {
+			if (inputObservations.size()==0) {
 				inputObservations = knn.initPoint();
 			} // train default point
 
@@ -181,7 +181,7 @@ public class Controller implements Initializable {
 					data.getData().add(new XYChart.Data(test.getX(), test.getY()));
 					data.getData().add(new XYChart.Data(neighbour.get(i).getX(), neighbour.get(i).getY()));
 					lineChart.getData().add(data);
-
+                  
 				}
 			}
 			vbox.getChildren().add(lineChart);
@@ -230,20 +230,25 @@ public class Controller implements Initializable {
 		inputObservations.add(tmp);
 
 	}
-
+    
+	@FXML 
+	private Label labelCluster;
 	@FXML
 	void addTestPoint() {
 		Point tm = new Point(Double.parseDouble(xField.getText()), Double.parseDouble(yField.getText()));
 		testPoint.add(tm);
+		
 	}
        
 	@FXML
 	void clear(ActionEvent event) {
 		clickCount = 0;
 		nextBut.setDisable(false);
-
 		inputObservations.clear();
 		testPoint.clear();
+		
+		testSeries.getData().clear();
+		
 		scatterChart.getData().removeAll(arrayInputSeries);
 		lineChart.getData().removeAll(arrayInputSeries);
 

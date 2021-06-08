@@ -29,15 +29,8 @@ public class Point {
 	        return clusterNo;
 	    }
 
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	public void setY(double y) {
-		this.y = y;
-	}
-
-	public double calculateDistance(Point point) {
+	    
+	    public double calculateDistance(Point point) {
 	        double Ox = this.x - point.getX();
 	        double Oy = this.y - point.getY();
 	        return Math.sqrt(Math.abs( Ox * Ox + Oy * Oy ));
