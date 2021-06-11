@@ -37,11 +37,11 @@
       <Button fx:id="runBut" layoutX="23.0" layoutY="641.0" mnemonicParsing="false" onAction="#run" text="Run" />
       <VBox fx:id="vbox" layoutX="346.0" layoutY="25.0" prefHeight="464.0" prefWidth="530.0" />
       <Button layoutX="91.0" layoutY="641.0" mnemonicParsing="false" onAction="#clear" text="Clear" />
-      <TableView layoutX="23.0" layoutY="389.0" prefHeight="200.0" prefWidth="234.0">
+      <TableView fx:id="point" layoutX="23.0" layoutY="389.0" onMouseClicked="#addData" prefHeight="200.0" prefWidth="234.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="X" />
-          <TableColumn prefWidth="75.0" text="Y" />
-            <TableColumn prefWidth="75.0" text="ClusterNo" />
+          <TableColumn prefWidth="75.0" text="X" fx:id="xCol" />
+          <TableColumn fx:id="yCol" prefWidth="75.0" text="Y" />
+            <TableColumn fx:id="clusterCol" prefWidth="75.0" text="ClusterNo" />
         </columns>
       </TableView>
       <Pane layoutX="17.0" layoutY="169.0" prefHeight="200.0" prefWidth="310.0">
