@@ -1,9 +1,8 @@
 package se.project.clustering.kmeans;
 
-<<<<<<< Updated upstream
-public class KMeansClustering {
-}
-=======
+import se.project.components.Cluster;
+import se.project.components.Point;
+import java.util.*;
 
 
 
