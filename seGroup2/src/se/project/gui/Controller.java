@@ -305,11 +305,7 @@ public class Controller implements Initializable {
 		Point tm = new Point(Double.parseDouble(xField.getText()), Double.parseDouble(yField.getText()));
 		tm.updateCluster(-1);
 		testPoint.add(tm);
-<<<<<<< Updated upstream
-		
-=======
 		point.getItems().add(tm);
->>>>>>> Stashed changes
 	}
        
 	@FXML
@@ -318,10 +314,6 @@ public class Controller implements Initializable {
 		nextBut.setDisable(false);
 		inputObservations.clear();
 		testPoint.clear();
-<<<<<<< Updated upstream
-		
-=======
->>>>>>> Stashed changes
 		testSeries.getData().clear();
 		
 		scatterChart.getData().removeAll(arrayInputSeries);
