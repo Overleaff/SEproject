@@ -4,26 +4,42 @@ import se.project.components.Cluster;
 import se.project.components.Point;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MeanShiftClustering extends Cluster {
-    private Point point;
+    protected Point seedPoint;
+    protected int bandwidth;
 
-    public MeanShiftClustering(Point point) {
-        this.point = point;
+    public MeanShiftClustering(int bandwidth) {
+        this.bandwidth = bandwidth;
     }
 
-    @Override
+    public void setSeedPoint(Point seedPoint) {
+        this.seedPoint = seedPoint;
+    }
+
+    public Point getSeedPoint() {
+        return seedPoint;
+    }
+
+    public int getBandwidth() {
+        return bandwidth;
+    }
+
+    public ArrayList<Point> initPoint() {
+        Random rand = new Random();
+        for (int i = 0; i < MAX_NUM_POINT; i++) {
+            double upperbound = 10;
+            double x = rand.nextDouble() * upperbound;
+            double y = rand.nextDouble() * upperbound;
+            Point tmp = new Point(x, y);
+            tmp.updateCluster(3);
+            this.listPoint.add(tmp);
+        }
+        return listPoint;
+    }
+
     public ArrayList<Point> step() {
-        return null;
-    }
-
-    public ArrayList<Point> meanShiftClustering(Point point, int bandwidth) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Point> result() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -40,6 +56,17 @@ public class MeanShiftClustering extends Cluster {
         return Math.pow(Math.E, -0.5 * (squareDistance / squareBandwidth));
     }
 
+    public Point createSeedPoint(Point p) {
+        for (Point point : this.listPoint) {
+            if (point.getX() == p.getX() && point.getY() == p.getY()) {
+                this.seedPoint.setX(point.getX());
+                this.seedPoint.setY(point.getY());
+            }
+        }
+        return this.seedPoint;
+    }
+
+    //parameter point is an initial seed.
     public ArrayList<Point> meanShiftClustering(Point point, ArrayList<Point> pointList, int bandwidth) {
         double shiftingDistance = 0;
         do {
@@ -66,5 +93,30 @@ public class MeanShiftClustering extends Cluster {
 
         } while (shiftingDistance > 0.00005);
         return pointList;
+    }
+
+    @Override
+    public ArrayList<Point> result() {
+        return meanShiftClustering(seedPoint, this.listPoint, bandwidth);
+    }
+
+    public static void main(String[] args) {
+        MeanShiftClustering meanShift = new MeanShiftClustering(3);
+        ArrayList<Point> points = new ArrayList<>();
+        points.add(new Point(1,2));
+        points.add(new Point(1,3.6));
+        points.add(new Point(3.4,5));
+        points.add(new Point(1,7.9));
+        points.add(new Point(9,2));
+        points.add(new Point(4.5,2.2));
+        points.add(new Point(1.6,6.2));
+        points.add(new Point(5.1,2.7));
+        points.add(new Point(0.8,8.2));
+        points.add(new Point(7,4.2));
+        meanShift.setSeedPoint(points.get(0));
+        ArrayList<Point> meanShiftPoints = meanShift.meanShiftClustering(meanShift.getSeedPoint(), points, meanShift.getBandwidth());
+        for (int i = 0; i < meanShiftPoints.size(); i++) {
+            System.out.println(meanShiftPoints.get(i).getX() + " " + meanShiftPoints.get(i).getY());
+        }
     }
 }

@@ -27,7 +27,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="18.0" layoutY="124.0" prefHeight="22.0" prefWidth="84.0" style="-fx-background-color: ef8891; -fx-text-fill: white;" text="Choosing K">
+      <Label layoutX="18.0" layoutY="124.0" prefHeight="22.0" prefWidth="140.0" style="-fx-background-color: ef8891; -fx-text-fill: white;" text="Choosing K/ Bandwidth">
          <font>
             <Font size="14.0" />
          </font>
@@ -41,7 +41,7 @@
         <columns>
           <TableColumn prefWidth="75.0" text="X" fx:id="xCol" />
           <TableColumn fx:id="yCol" prefWidth="75.0" text="Y" />
-            <TableColumn fx:id="clusterCol" prefWidth="75.0" text="ClusterNo" />
+            <TableColumn fx:id="clusterCol" prefWidth="83.0" text="ClusterNo" />
         </columns>
       </TableView>
       <Pane layoutX="17.0" layoutY="169.0" prefHeight="200.0" prefWidth="310.0">
@@ -67,6 +67,7 @@
             <TextField fx:id="clustField" layoutX="147.0" layoutY="104.0" />
             <Button fx:id="addTestPoint" layoutX="196.0" layoutY="161.0" mnemonicParsing="false" onAction="#addTestPoint" text="Add Test Point" />
             <Label fx:id="labelClusters" layoutX="147.0" layoutY="137.0" prefHeight="17.0" prefWidth="150.0" />
+            <Button fx:id="setSeedPoint" layoutX="196.0" layoutY="188.0" mnemonicParsing="false" onAction="#setSeedPoint" text="Set Seed Point" />
          </children>
       </Pane>
       <Label fx:id="invalid" layoutX="164.0" layoutY="161.0" onMouseClicked="#run" prefHeight="18.0" prefWidth="150.0" />
