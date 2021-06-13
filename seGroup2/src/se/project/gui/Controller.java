@@ -562,28 +562,7 @@ public class Controller implements Initializable {
     }
 
 
-    @FXML
-    void addData() {
-        Point tmp = new Point(Double.parseDouble(xField.getText()), Double.parseDouble(yField.getText()));
-        tmp.updateCluster(Integer.parseInt(clustField.getText()));
-        point.getItems().add(tmp);
-        inputObservations.add(tmp);
-    }
-
-    @FXML
-    private Label labelCluster;
-
-    @FXML
-    void addTestPoint() {
-        Random rand = new Random(); //instance of random class
-        double upperbound = 10; //generate random values from 0-24
-        double x = rand.nextDouble() * upperbound;
-        double y = rand.nextDouble() * upperbound;
-        Point tm = new Point(x, y);
-        tm.updateCluster(-1);
-        testPoint.add(tm);
-        point.getItems().add(tm);
-    }
+    
 
     @FXML
     void clear(ActionEvent event) {
