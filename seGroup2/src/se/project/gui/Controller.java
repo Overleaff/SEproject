@@ -168,7 +168,7 @@ public class Controller implements Initializable {
             if (testPoint.size() == 0) {
 
             	   Random rand = new Random(); //instance of random class
-			        for (int i = 0; i < 2; i++) {
+			        for (int i = 0; i < Integer.parseInt(kField.getText()); i++) {
 			          
 			            double  x = 10+rand.nextDouble()*5;  //rand 10-15
 			            double y = 10+rand.nextDouble()*5;   
@@ -449,7 +449,8 @@ public class Controller implements Initializable {
     @FXML
     void addTestPoint() {
         Point tm = new Point(Double.parseDouble(xField.getText()), Double.parseDouble(yField.getText()));
-        tm.updateCluster(-1);
+        if(clustField.getText()==""||clustField.getText()!="") {
+        tm.updateCluster(-1);}
         testPoint.add(tm);
         point.getItems().add(tm);
     }
