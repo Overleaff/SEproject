@@ -4,9 +4,6 @@ import se.project.components.Cluster;
 import se.project.components.Point;
 import java.util.*;
 
-
-
-
 public class KMeansClustering extends Cluster {
     ArrayList<Point> Kmeans = new ArrayList<Point>();
     int clusters;
@@ -15,20 +12,24 @@ public class KMeansClustering extends Cluster {
     public KMeansClustering(){
        
     }
-    
-    
+
+    public int getClusters() {
+        return clusters;
+    }
+
     public KMeansClustering(ArrayList<Point> tmp, int K){
         this.Kmeans = tmp;
         this.clusters = K;
     }
 
     public void init(){
-        for (int i = 0; i < clusters; i++) {
+        for (int i = 0; i < this.clusters; i++) {
             this.centroid.add(this.Kmeans.get(i));
+            this.centroid.get(i).updateCluster(i);
         }
     }
 
-    public void updateCentroid(){
+    public ArrayList<Point> updateCentroid(){
         int i;
         for (i = 0; i < clusters; i++){
             int count = 0;
@@ -41,23 +42,28 @@ public class KMeansClustering extends Cluster {
                     tmpY += Kmeans.get(j).getY();
                 }
             }
-            centroid.set(i, new Point(tmpX/count, tmpY/count));
+            this.centroid.set(i, new Point(tmpX/count, tmpY/count));
+            this.centroid.get(i).updateCluster(i);
         }
+        return centroid;
     }
 
     public ArrayList<Point> step(){
         for (int i = 0; i  < Kmeans.size(); i ++){
-            double ref = this.centroid.get(0).
-                    calculateDistance(Kmeans.get(i));
-            this.Kmeans.get(0).updateCluster(0);
+            double ref = this.Kmeans.get(i).
+                    calculateDistance(centroid.get(0));
+            this.Kmeans.get(i).updateCluster(0);
 
             for (int j = 1; j < clusters; j++){
                 double tmp = this.centroid.get(j).
                         calculateDistance(this.Kmeans.get(i));
-                if (tmp < ref) this.Kmeans.get(i).updateCluster(j);
+                if (tmp < ref){
+                    this.Kmeans.get(i).updateCluster(j);
+                    ref = tmp;
+                }
             }
         }
-        return Kmeans;
+        return this.Kmeans;
     }
 
     public boolean compareCentroid(ArrayList<Point> tmp1, ArrayList<Point> tmp2){
@@ -75,15 +81,20 @@ public class KMeansClustering extends Cluster {
             tmp.add(new Point(0.0, 0.0));
         }
 
+        int loop = 0;
         while (compareCentroid(tmp, this.centroid)){
+            loop ++;
             for (int i = 0; i < this.clusters; i++){
                 tmp.set(i,new Point(this.centroid.get(i).getX(),this.centroid.get(i).getY()));
             }
             step();
+            System.out.println();
+            showPoint();
             updateCentroid();
+            if (loop == 100000) return this.Kmeans;
         }
         
-        return null;
+        return this.Kmeans;
     }
 
     public void showPoint(){
@@ -95,10 +106,13 @@ public class KMeansClustering extends Cluster {
     public static void main (String[] args){
         Cluster abc = new KMeansClustering();
         KMeansClustering testing = new KMeansClustering(abc.initPoint(), 3);
-        testing.result();
-        testing.showPoint();
+        testing.init();
+        testing.step();
+        ArrayList<Point> abcd = new ArrayList<>();;
+        abcd = testing.updateCentroid();
+        for (int i = 0; i < abcd.size(); i++){
+            System.out.println(abcd.get(i).getX() + " " + abcd.get(i).getY() + " " + abcd.get(i).getClusterNo());
+        }
     }
-   
-
 }
->>>>>>> Stashed changes
+
