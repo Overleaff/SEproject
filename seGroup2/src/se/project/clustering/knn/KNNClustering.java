@@ -3,7 +3,6 @@ package se.project.clustering.knn;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
@@ -19,6 +18,7 @@ public class KNNClustering extends Cluster{
 	 //init when user not enter anything
 	 public  ArrayList<Point> initPoint() {
 	        Random rand = new Random(); //instance of random class
+
 	        for (int i = 0; i < maxNumPoint; i++) {
 	            //generate random values from 0-24
 	        	double x,y;
@@ -28,6 +28,7 @@ public class KNNClustering extends Cluster{
 	            y = 5+rand.nextDouble()*10;
 	            tmp = new Point(x,y);
 	            tmp.updateCluster(1);
+
 	            this.listPoint.add(tmp);
 	         }else {
 	        	  x = 10+rand.nextDouble() *10;     //rand 10-20
