@@ -139,11 +139,11 @@ public class Controller implements Initializable {
             
             
             for( Point test :input) {
-            XYChart.Series<Number,Number> tmp = new XYChart.Series<>();
-            tmp.getData().add(new XYChart.Data(test.getX(), test.getY()));
-           
-            tmp.setName(((Integer)test.getClusterNo()).toString());
-            scatterChart.getData().add(tmp);
+            	XYChart.Series<Number,Number> tmp = new XYChart.Series<>();
+            	tmp.getData().add(new XYChart.Data(test.getX(), test.getY()));
+                    
+            	tmp.setName(((Integer)test.getClusterNo()).toString());
+            	scatterChart.getData().add(tmp);
             }
             
             
@@ -224,6 +224,7 @@ public class Controller implements Initializable {
             mshift.setSeedPoint(inputObservations.get(0));
             for (Point point : inputObservations) {
                 testSeries.getData().add(new XYChart.Data(point.getX(), point.getY()));
+                arrayInputSeries.add(testSeries);
             }
             scatterChart.getData().add(testSeries);
             vbox.getChildren().add(scatterChart);
@@ -349,7 +350,7 @@ public class Controller implements Initializable {
     public void visual() {
         nextBut.setDisable(true);
 
-        if (((myChoiceBox.getValue()) == "K-Nearest Neighbours")) 
+        if (((myChoiceBox.getValue()) == "K-Nearest Neighbours")) {
         
         	testSeries.getData().clear();
 
@@ -366,56 +367,49 @@ public class Controller implements Initializable {
                         
                     }
                 }
+                
             }
                
-              
+        }       
 
         
 
-        if (((myChoiceBox.getValue()) == "K Means")) {
-            testSeries.getData().clear();
-            scatterChart.getData().remove(testSeries);
-           
-            resultPoint = kmean.result();
-            kmean.showPoint();
+            if (((myChoiceBox.getValue()) == "K Means")) {
+                testSeries.getData().clear();
+                scatterChart.getData().remove(testSeries);
+               
+                resultPoint = kmean.result();
+                kmean.showPoint();
 
-            ArrayList<Integer> className = new ArrayList<>();
+                ArrayList<Integer> className = new ArrayList<>();
 
-            for (Point p : testPoint) {
-                for (XYChart.Series s : arrayInputSeries) {
-                    if ((p.getClusterNo()) == Integer.parseInt(s.getName())) {
-                        s.getData().add(new XYChart.Data(p.getX(), p.getY()));
-                    }
-                }
-            }
-
-            for (int i = 0; i < kmean.getClusters(); i++)
-                className.add(i);
-
-
-            // set Name data and add Point
-            for (Integer clust : className) {
-                XYChart.Series<Number, Number> testSeries1 = new XYChart.Series<>();
-                testSeries1.setName(clust.toString());
-                for (Point point : testPoint) {
-                    if (clust == (point.getClusterNo())) {
-                        testSeries1.getData().add(new XYChart.Data(point.getX(), point.getY()));
-                        arrayInputSeries.add(testSeries1);
+                for (Point p : testPoint) {
+                    for (XYChart.Series s : arrayInputSeries) {
+                        if ((p.getClusterNo()) == Integer.parseInt(s.getName())) {
+                            s.getData().add(new XYChart.Data(p.getX(), p.getY()));
+                        }
                     }
                 }
 
-                scatterChart.getData().add(testSeries1);
-            }
+                for (int i = 0; i < kmean.getClusters(); i++)
+                    className.add(i);
 
 
-            for (Point p : testPoint) {
-                for (XYChart.Series s : arrayInputSeries) {
-                    if ((p.getClusterNo()) == Integer.parseInt(s.getName())) {
-                        s.getData().add(new XYChart.Data(p.getX(), p.getY()));
+                // set Name data and add Point
+                for (Integer clust : className) {
+                    XYChart.Series<Number, Number> testSeries1 = new XYChart.Series<>();
+                    testSeries1.setName(clust.toString());
+                    for (Point point : testPoint) {
+                        if (clust == (point.getClusterNo())) {
+                            testSeries1.getData().add(new XYChart.Data(point.getX(), point.getY()));
+                            
+                        }
                     }
+
+                    scatterChart.getData().add(testSeries1);
                 }
+
             }
-        }
 
         if (myChoiceBox.getValue() == "Mean Shift Clustering") {
             scatterChart.getData().remove(testSeries);
@@ -423,49 +417,14 @@ public class Controller implements Initializable {
 
             for (Point point : resultPoint) {
                 testSeries.getData().add(new XYChart.Data(point.getX(), point.getY()));
+                arrayInputSeries.add(testSeries);
             }
+            
             scatterChart.getData().add(testSeries);
-            vbox.getChildren().add(scatterChart);
+           // vbox.getChildren().add(scatterChart);
 
         }
-		/*
-		if (((myChoiceBox.getValue()) == "K Means")) {
-
-			scatterChart.getData().remove(testSeries);
-			resultPoint = kmean.result();
-
-			ArrayList<Integer> className = new ArrayList<>();
-
-			//
-			for (int i = 0; i < resultPoint.size(); i++) {
-				int flag = 0;
-				for (int j = 0; j < i; j++) {
-					if (resultPoint.get(i).getClusterNo() == (resultPoint.get(j).getClusterNo())) {
-						flag = 1;
-						break;
-					}
-				}
-				if (flag == 0) {
-					className.add(resultPoint.get(i).getClusterNo());
-				}
-			}
-			// add test Series
-			
-          
-			// set Name data and add Point
-			for (Integer clust : className) {
-				XYChart.Series<Number, Number> testSeries1 = new XYChart.Series<>();
-				testSeries1.setName(clust.toString());
-				for (Point point : testPoint) {
-					if (clust == (point.getClusterNo())) {
-						testSeries1.getData().add(new XYChart.Data(point.getX(), point.getY()));
-					}
-				}
-				
-				scatterChart.getData().add(testSeries1);
-			}
-			
-		}*/
+		
 
     }
 
@@ -495,8 +454,11 @@ public class Controller implements Initializable {
         nextBut.setDisable(false);
         inputObservations.clear();
         testPoint.clear();
+      
+        resultPoint.clear(); 
+        
+        scatterChart.getData().remove(testSeries);
         testSeries.getData().clear();
-
         scatterChart.getData().removeAll(arrayInputSeries);
         lineChart.getData().removeAll(arrayInputSeries);
         vbox.getChildren().clear();
