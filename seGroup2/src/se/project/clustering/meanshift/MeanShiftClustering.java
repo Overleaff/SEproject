@@ -28,7 +28,7 @@ public class MeanShiftClustering extends Cluster {
 
     public ArrayList<Point> initPoint() {
         Random rand = new Random();
-        for (int i = 0; i < MAX_NUM_POINT; i++) {
+        for (int i = 0; i < maxNumPoint; i++) {
             double upperbound = 10;
             double x = rand.nextDouble() * upperbound;
             double y = rand.nextDouble() * upperbound;

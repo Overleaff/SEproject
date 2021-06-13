@@ -151,26 +151,8 @@ public class Controller implements Initializable {
         }
 
 
-        if (((myChoiceBox.getValue()) == "K-Nearest Neighbours") && kField.getText() != ""
-                && Integer.parseInt(kField.getText()) > 0) {
         	
-        	
-		/*
-		if (((myChoiceBox.getValue()) == "K Means") && kField.getText() != ""
-				&& Integer.parseInt(kField.getText()) > 0) {
-			    kmean = new KMeansClustering();
-			    if (testPoint.size()==0) {
-			    	testPoint = kmean.initPoint();
-			        kmean = new KMeansClustering(testPoint, 3);
-				}
-				for (Point test : testPoint) {
-					testSeries.getData().add(new XYChart.Data(test.getX(), test.getY()));
-				}
-				testSeries.setName("Unknown");
-				scatterChart.getData().add(testSeries);
-				vbox.getChildren().add(scatterChart);
-		}
-		*/
+     
 
         if (((myChoiceBox.getValue()) == "K-Nearest Neighbours") && kField.getText() != ""
                 && Integer.parseInt(kField.getText()) > 0) {
@@ -388,7 +370,7 @@ public class Controller implements Initializable {
                
               
 
-        }
+        
 
         if (((myChoiceBox.getValue()) == "K Means")) {
             testSeries.getData().clear();
@@ -562,86 +544,9 @@ public class Controller implements Initializable {
     }
 
 
-    @FXML
-    void addData() {
-        Point tmp = new Point(Double.parseDouble(xField.getText()), Double.parseDouble(yField.getText()));
-        tmp.updateCluster(Integer.parseInt(clustField.getText()));
-        point.getItems().add(tmp);
-        inputObservations.add(tmp);
-    }
+    
 
-    @FXML
-    private Label labelCluster;
-
-    @FXML
-    void addTestPoint() {
-        Random rand = new Random(); //instance of random class
-        double upperbound = 10; //generate random values from 0-24
-        double x = rand.nextDouble() * upperbound;
-        double y = rand.nextDouble() * upperbound;
-        Point tm = new Point(x, y);
-        tm.updateCluster(-1);
-        testPoint.add(tm);
-        point.getItems().add(tm);
-    }
-
-    @FXML
-    void clear(ActionEvent event) {
-        clickCount = 0;
-        nextBut.setDisable(false);
-        inputObservations.clear();
-        testPoint.clear();
-        resultPoint.clear();
-        testSeries.getData().clear();
-        
-        scatterChart.getData().removeAll(arrayInputSeries);
-        lineChart.getData().removeAll(arrayInputSeries);
-        vbox.getChildren().clear();
-        point.getItems().clear();
-    }
-
-    // back to home
-    @FXML
-    public void goHome() {
-        try {
-
-            Parent root = (Parent) FXMLLoader.load(getClass().getResource("home.fxml"));
-            Stage stage = (Stage) home.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            Image icon = new Image("se/project/image/image.png");
-            stage.getIcons().add(icon);
-            stage.setTitle("DataVisualization");
-            stage.setMaxHeight(900);
-            stage.setMaxWidth(1300);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // load scene3
-    @FXML
-    public void clickGUI() {
-        try {
-
-            Parent root = (Parent) FXMLLoader.load(getClass().getResource("cluster.fxml"));
-            Stage stage = (Stage) gui.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            Image icon = new Image("se/project/image/image.png");
-            stage.getIcons().add(icon);
-            stage.setTitle("DataVisualization");
-            stage.setMaxHeight(900);
-            stage.setMaxWidth(1300);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @FXML
-    private TableView<Point> point;
-    @FXML
+ 
 
     @FXML
     private TableView<Point> point;
