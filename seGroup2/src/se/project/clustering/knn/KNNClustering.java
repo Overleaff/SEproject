@@ -18,17 +18,32 @@ public class KNNClustering extends Cluster{
 	 //init when user not enter anything
 	 public  ArrayList<Point> initPoint() {
 	        Random rand = new Random(); //instance of random class
-	        for (int i = 0; i < MAX_NUM_POINT; i++) {
-	            double upperbound = 10; //generate random values from 0-24
-	            double x = rand.nextDouble() * upperbound;
-	            double y = rand.nextDouble() * upperbound;
-	            Point tmp = new Point(x, y);
-	            if(i<5) {
-	            	tmp.updateCluster(1);
-	            }else {
-	            	tmp.updateCluster(2);
-	            }
+
+	        for (int i = 0; i < maxNumPoint; i++) {
+	            //generate random values from 0-24
+	        	double x,y;
+	        	 Point tmp ;
+	         if(i<maxNumPoint/2) {
+	            x = 5+rand.nextDouble()*10;     //rand 5-15
+	            y = 5+rand.nextDouble()*10;
+	            tmp = new Point(x,y);
+	            tmp.updateCluster(1);
+
 	            this.listPoint.add(tmp);
+	         }else {
+	        	  x = 10+rand.nextDouble() *10;     //rand 10-20
+		            y = 10+rand.nextDouble() *10;
+		            tmp = new Point(x,y);
+		            tmp.updateCluster(2);
+		            this.listPoint.add(tmp);
+	         }
+	           
+	            
+	         
+	            
+	            
+	            
+	           
 	        }
 	        return listPoint;
 	  }
@@ -122,15 +137,5 @@ public class KNNClustering extends Cluster{
 	
 	
 	
-	@Override
-	public ArrayList<Point> step() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
-	@Override
-	public ArrayList<Point> result() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

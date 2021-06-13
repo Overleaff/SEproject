@@ -14,10 +14,22 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import javafx.scene.input.KeyEvent;
+
+
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import se.project.clustering.kmeans.KMeansClustering;
 import se.project.clustering.knn.KNNClustering;
+
+import se.project.clustering.knn.Neighbour;
+//import se.project.clustering.meanshift.MeanShiftClustering;
+import se.project.components.Cluster;
+import se.project.components.Point;
+
+import java.util.Random;
+
 import se.project.clustering.meanshift.MeanShiftClustering;
 import se.project.components.Point;
 
@@ -25,6 +37,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 
 public class Controller implements Initializable {
     private int clickCount = 0;
@@ -62,8 +75,10 @@ public class Controller implements Initializable {
     private TextField clustField;
     @FXML
     private Button addTestPoint;
+
     @FXML
     private Button setSeedPoint;
+
 
     // necessary component
     private String[] algorithm = {"K Means", "K-Nearest Neighbours", "Mean Shift Clustering"};
@@ -77,9 +92,16 @@ public class Controller implements Initializable {
 
     private KMeansClustering kmean;
     private KNNClustering knn; // private KNNClustering knn;
+
+
+    
+    ArrayList<Point> input = new ArrayList<>();
+    //private MeanShiftClustering mshift;
+
     private MeanShiftClustering mshift;
 
     //set seed point for mean shift
+
 
     @FXML
     public void run() {
@@ -89,6 +111,50 @@ public class Controller implements Initializable {
         } else {
             invalid.setText("");
         }
+
+
+        if (((myChoiceBox.getValue()) == "K Means") && kField.getText() != ""
+                && Integer.parseInt(kField.getText()) > 0) {
+            kmean = new KMeansClustering();
+          
+            // input = 0 
+            	kmean.init();
+            	kmean.step();
+            	
+            	input = kmean.updateCentroid(); // diem tam
+                testPoint = kmean.initPoint();
+                kmean = new KMeansClustering(testPoint, Integer.parseInt(kField.getText()));
+                
+                // run all
+                
+               /* for (int i = 0; i < Integer.parseInt(kField.getText()); i++){
+                	inputObservations.add(new Point(0.0, 0.0));
+                }*/
+            
+            for (Point test : testPoint) {
+                testSeries.getData().add(new XYChart.Data(test.getX(), test.getY()));
+            }
+            testSeries.setName("Unknown");
+            scatterChart.getData().add(testSeries);
+            
+            
+            for( Point test :input) {
+            XYChart.Series<Number,Number> tmp = new XYChart.Series<>();
+            tmp.getData().add(new XYChart.Data(test.getX(), test.getY()));
+           
+            tmp.setName(((Integer)test.getClusterNo()).toString());
+            scatterChart.getData().add(tmp);
+            }
+            
+            
+            vbox.getChildren().add(scatterChart);
+        }
+
+
+        if (((myChoiceBox.getValue()) == "K-Nearest Neighbours") && kField.getText() != ""
+                && Integer.parseInt(kField.getText()) > 0) {
+        	
+        	
 		/*
 		if (((myChoiceBox.getValue()) == "K Means") && kField.getText() != ""
 				&& Integer.parseInt(kField.getText()) > 0) {
@@ -108,6 +174,7 @@ public class Controller implements Initializable {
 
         if (((myChoiceBox.getValue()) == "K-Nearest Neighbours") && kField.getText() != ""
                 && Integer.parseInt(kField.getText()) > 0) {
+
             knn = new KNNClustering();
             // replace by user
             if (inputObservations.size() == 0) {
@@ -117,8 +184,17 @@ public class Controller implements Initializable {
             ArrayList<Integer> className = new ArrayList<>();
 
             if (testPoint.size() == 0) {
-                Point test1 = new Point(10.0, 8.0);
-                testPoint.add(test1);
+
+            	   Random rand = new Random(); //instance of random class
+			        for (int i = 0; i < 2; i++) {
+			          
+			            double  x = 10+rand.nextDouble()*5;  //rand 10-15
+			            double y = 10+rand.nextDouble()*5;   
+			            Point tmp = new Point(x, y);
+			            
+			            testPoint.add(tmp);
+			        }
+
             }
             //
             for (int i = 0; i < inputObservations.size(); i++) {
@@ -155,6 +231,7 @@ public class Controller implements Initializable {
             vbox.getChildren().add(scatterChart);
         }
 
+
         if (myChoiceBox.getValue() == "Mean Shift Clustering") {
             //Set seed point and bandwidth for mean shift
             mshift = new MeanShiftClustering(Integer.parseInt(kField.getText()));
@@ -175,6 +252,7 @@ public class Controller implements Initializable {
     public void setSeedPoint() {
         Point tmp = new Point(Double.parseDouble(xField.getText()), Double.parseDouble(yField.getText()));
         mshift.createSeedPoint(tmp);
+
     }
 
     private LineChart<Number, Number> lineChart; // support step KNN
@@ -182,57 +260,105 @@ public class Controller implements Initializable {
     @FXML
     public void next() {
 
-        if (clickCount == 0) {
-
-            vbox.getChildren().clear();
-            clickCount++;
-            // add point to line chart
-            // draw line by 1 step
-            for (Point p : testPoint) {
-
-                for (Point point : inputObservations) {
-                    XYChart.Series dataS = new XYChart.Series();
-                    dataS.getData().add(new XYChart.Data(p.getX(), p.getY()));
-                    dataS.getData().add(new XYChart.Data(point.getX(), point.getY()));
-                    lineChart.getData().add(dataS);
-
-                    ///
-                }
-
+        if (((myChoiceBox.getValue()) == "K Means") && kField.getText() != ""
+                && Integer.parseInt(kField.getText()) > 0) {
+            scatterChart.getData().remove(testSeries);
+          
+            if(clickCount==0) {
+            	kmean.init();
             }
-            vbox.getChildren().add(lineChart);
-        } else if (clickCount == 1) {
-
             clickCount++;
-            lineChart.getData().clear();
-            vbox.getChildren().remove(lineChart);
-
-            for (Point test : testPoint) {
-                // goi den Step tra ve tap Neighbour
-                ArrayList<Point> neighbour = knn.step(test, inputObservations, Integer.parseInt(kField.getText()));
-
-                for (int i = 0; i < neighbour.size(); i++) {
-                    XYChart.Series data = new XYChart.Series();
-                    data.getData().add(new XYChart.Data(test.getX(), test.getY()));
-                    data.getData().add(new XYChart.Data(neighbour.get(i).getX(), neighbour.get(i).getY()));
-                    lineChart.getData().add(data);
-
+              
+            for (int i =1; i <= clickCount; i++){
+                for (int j = 1; j < 50; j++){  // 50-1000
+                    resultPoint = kmean.step();
+                    kmean.updateCentroid(); // tap diem tam
                 }
             }
-            vbox.getChildren().add(lineChart);
-        } else if (clickCount == 2) {
-            lineChart.getData().clear();
-            vbox.getChildren().remove(lineChart);
-            for (Point p : testPoint) {
-                for (XYChart.Series s : arrayInputSeries) {
-                    if ((p.getClusterNo()) == Integer.parseInt(s.getName())) {
-                        s.getData().add(new XYChart.Data(p.getX(), p.getY()));
+
+
+            ArrayList<XYChart.Series> testSeries1 = new ArrayList<>();
+            for (int clust = 0; clust < kmean.getClusters(); clust++) {
+                    XYChart.Series tmp = new XYChart.Series();
+                    testSeries1.add(tmp);
+                    if (clickCount ==1 ){
+                        testSeries1.get(clust).setName(new Integer(clust).toString());
+                    }
+
+                    for (Point point : resultPoint) {
+                        if (clust == (point.getClusterNo())) {
+                            System.out.print(clust);
+                            testSeries1.get(clust).getData().add(new XYChart.Data(point.getX(), point.getY()));
+                         
+                        }
+                    }
+
+                 scatterChart.getData().add(testSeries1.get(clust));
+                if (clickCount % 2 == 0) {
+                	testSeries.getData().clear();
+                	scatterChart.getData().clear();
+                	   
+                }
+            }
+            for (int clust = 0; clust < testSeries1.size(); clust++){
+                testSeries1.remove(clust);
+            }
+        }
+
+
+        if (((myChoiceBox.getValue()) == "K-Nearest Neighbours") && kField.getText() != ""
+                && Integer.parseInt(kField.getText()) > 0) {
+            if (clickCount == 0) {
+
+                vbox.getChildren().clear();
+                clickCount++;
+                // add point to line chart
+                // draw line by 1 step
+                for (Point p : testPoint) {
+
+                    for (Point point : inputObservations) {
+                        XYChart.Series dataS = new XYChart.Series();
+                        dataS.getData().add(new XYChart.Data(p.getX(), p.getY()));
+                        dataS.getData().add(new XYChart.Data(point.getX(), point.getY()));
+                        lineChart.getData().add(dataS);
+                        ///
                     }
                 }
+                vbox.getChildren().add(lineChart);
+            } else if (clickCount == 1) {
+
+                clickCount++;
+                lineChart.getData().clear();
+                vbox.getChildren().remove(lineChart);
+
+                for (Point test : testPoint) {
+                    // goi den Step tra ve tap Neighbour
+                    ArrayList<Point> neighbour = knn.step(test, inputObservations, Integer.parseInt(kField.getText()));
+
+                    for (int i = 0; i < neighbour.size(); i++) {
+                        XYChart.Series data = new XYChart.Series();
+                        data.getData().add(new XYChart.Data(test.getX(), test.getY()));
+                        data.getData().add(new XYChart.Data(neighbour.get(i).getX(), neighbour.get(i).getY()));
+                        lineChart.getData().add(data);
+
+                    }
+                }
+                vbox.getChildren().add(lineChart);
+            } else if (clickCount == 2) {
+                lineChart.getData().clear();
+                vbox.getChildren().remove(lineChart);
+                for (Point p : testPoint) {
+                    for (XYChart.Series s : arrayInputSeries) {
+                        if ((p.getClusterNo()) == Integer.parseInt(s.getName())) {
+                            s.getData().add(new XYChart.Data(p.getX(), p.getY()));
+                        }
+                    }
+                }
+                scatterChart.getData().remove(testSeries);
+                vbox.getChildren().add(scatterChart);
+                clickCount++;
             }
-            scatterChart.getData().remove(testSeries);
-            vbox.getChildren().add(scatterChart);
-            clickCount++;
+
         }
     }
 
@@ -241,11 +367,64 @@ public class Controller implements Initializable {
     public void visual() {
         nextBut.setDisable(true);
 
-        if (((myChoiceBox.getValue()) == "K-Nearest Neighbours")) {
+        if (((myChoiceBox.getValue()) == "K-Nearest Neighbours")) 
+        
+        	testSeries.getData().clear();
+
 
             scatterChart.getData().remove(testSeries);
             resultPoint = knn.result(testPoint, inputObservations, Integer.parseInt(kField.getText())); // result point
             // after knn
+
+
+            for (Point p : resultPoint) {
+                for (XYChart.Series s : arrayInputSeries) {
+                    if ((p.getClusterNo()) == Integer.parseInt(s.getName())) {
+                        s.getData().add(new XYChart.Data(p.getX(), p.getY()));
+                        
+                    }
+                }
+            }
+               
+              
+
+        }
+
+        if (((myChoiceBox.getValue()) == "K Means")) {
+            testSeries.getData().clear();
+            scatterChart.getData().remove(testSeries);
+           
+            resultPoint = kmean.result();
+            kmean.showPoint();
+
+            ArrayList<Integer> className = new ArrayList<>();
+
+            for (Point p : testPoint) {
+                for (XYChart.Series s : arrayInputSeries) {
+                    if ((p.getClusterNo()) == Integer.parseInt(s.getName())) {
+                        s.getData().add(new XYChart.Data(p.getX(), p.getY()));
+                    }
+                }
+            }
+
+            for (int i = 0; i < kmean.getClusters(); i++)
+                className.add(i);
+
+
+            // set Name data and add Point
+            for (Integer clust : className) {
+                XYChart.Series<Number, Number> testSeries1 = new XYChart.Series<>();
+                testSeries1.setName(clust.toString());
+                for (Point point : testPoint) {
+                    if (clust == (point.getClusterNo())) {
+                        testSeries1.getData().add(new XYChart.Data(point.getX(), point.getY()));
+                        arrayInputSeries.add(testSeries1);
+                    }
+                }
+
+                scatterChart.getData().add(testSeries1);
+            }
+
 
             for (Point p : testPoint) {
                 for (XYChart.Series s : arrayInputSeries) {
@@ -378,6 +557,84 @@ public class Controller implements Initializable {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+
+        }
+    }
+
+
+    @FXML
+    void addData() {
+        Point tmp = new Point(Double.parseDouble(xField.getText()), Double.parseDouble(yField.getText()));
+        tmp.updateCluster(Integer.parseInt(clustField.getText()));
+        point.getItems().add(tmp);
+        inputObservations.add(tmp);
+    }
+
+    @FXML
+    private Label labelCluster;
+
+    @FXML
+    void addTestPoint() {
+        Random rand = new Random(); //instance of random class
+        double upperbound = 10; //generate random values from 0-24
+        double x = rand.nextDouble() * upperbound;
+        double y = rand.nextDouble() * upperbound;
+        Point tm = new Point(x, y);
+        tm.updateCluster(-1);
+        testPoint.add(tm);
+        point.getItems().add(tm);
+    }
+
+    @FXML
+    void clear(ActionEvent event) {
+        clickCount = 0;
+        nextBut.setDisable(false);
+        inputObservations.clear();
+        testPoint.clear();
+        resultPoint.clear();
+        testSeries.getData().clear();
+        
+        scatterChart.getData().removeAll(arrayInputSeries);
+        lineChart.getData().removeAll(arrayInputSeries);
+        vbox.getChildren().clear();
+        point.getItems().clear();
+    }
+
+    // back to home
+    @FXML
+    public void goHome() {
+        try {
+
+            Parent root = (Parent) FXMLLoader.load(getClass().getResource("home.fxml"));
+            Stage stage = (Stage) home.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            Image icon = new Image("se/project/image/image.png");
+            stage.getIcons().add(icon);
+            stage.setTitle("DataVisualization");
+            stage.setMaxHeight(900);
+            stage.setMaxWidth(1300);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // load scene3
+    @FXML
+    public void clickGUI() {
+        try {
+
+            Parent root = (Parent) FXMLLoader.load(getClass().getResource("cluster.fxml"));
+            Stage stage = (Stage) gui.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            Image icon = new Image("se/project/image/image.png");
+            stage.getIcons().add(icon);
+            stage.setTitle("DataVisualization");
+            stage.setMaxHeight(900);
+            stage.setMaxWidth(1300);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -385,6 +642,11 @@ public class Controller implements Initializable {
     @FXML
     private TableView<Point> point;
     @FXML
+
+    @FXML
+    private TableView<Point> point;
+    @FXML
+
     private TableColumn<Point, Double> yCol = new TableColumn<>();
 
     @FXML
