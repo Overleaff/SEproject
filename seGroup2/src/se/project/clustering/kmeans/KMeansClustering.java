@@ -25,6 +25,7 @@ public class KMeansClustering extends Cluster {
     public void init(){
         for (int i = 0; i < this.clusters; i++) {
             this.centroid.add(this.Kmeans.get(i));
+            this.centroid.get(i).updateCluster(i);
         }
     }
 
@@ -41,8 +42,8 @@ public class KMeansClustering extends Cluster {
                     tmpY += Kmeans.get(j).getY();
                 }
             }
-            centroid.set(i, new Point(tmpX/count, tmpY/count));
-            centroid.get(i).updateCluster(i);
+            this.centroid.set(i, new Point(tmpX/count, tmpY/count));
+            this.centroid.get(i).updateCluster(i);
         }
         return centroid;
     }
@@ -50,7 +51,7 @@ public class KMeansClustering extends Cluster {
     public ArrayList<Point> step(){
         for (int i = 0; i  < Kmeans.size(); i ++){
             double ref = this.Kmeans.get(i).
-            calculateDistance(centroid.get(0));
+                    calculateDistance(centroid.get(0));
             this.Kmeans.get(i).updateCluster(0);
 
             for (int j = 1; j < clusters; j++){
@@ -75,12 +76,11 @@ public class KMeansClustering extends Cluster {
 
     public ArrayList<Point> result(){
         this.init();
-        
         ArrayList<Point> tmp = new ArrayList<Point>();
         for (int i = 0; i < this.clusters; i++){
             tmp.add(new Point(0.0, 0.0));
         }
-        
+
         int loop = 0;
         while (compareCentroid(tmp, this.centroid)){
             loop ++;
@@ -106,8 +106,13 @@ public class KMeansClustering extends Cluster {
     public static void main (String[] args){
         Cluster abc = new KMeansClustering();
         KMeansClustering testing = new KMeansClustering(abc.initPoint(), 3);
-        testing.result();
-        testing.showPoint();
+        testing.init();
+        testing.step();
+        ArrayList<Point> abcd = new ArrayList<>();;
+        abcd = testing.updateCentroid();
+        for (int i = 0; i < abcd.size(); i++){
+            System.out.println(abcd.get(i).getX() + " " + abcd.get(i).getY() + " " + abcd.get(i).getClusterNo());
+        }
     }
 }
 
