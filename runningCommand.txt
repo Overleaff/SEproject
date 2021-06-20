@@ -1,4 +1,0 @@
--- algorithm 
-cd /Users/darkwhale/Documents/GitHub/SEproject/algorithm
-javac -d . Point.java
-javac -d . -cp /Users/darkwhale/Documents/GitHub/SEproject/algorithm cluster.java
