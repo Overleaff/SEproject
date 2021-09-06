@@ -21,7 +21,7 @@ public class App extends Application {
         stage.setMaxHeight(700);
         stage.setMaxWidth(1000);
       
-        
+        //test github ssh key
         Image icon = new Image("se/project/image/image.png");
         stage.getIcons().add(icon);
         
